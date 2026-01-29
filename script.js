@@ -1,16 +1,4 @@
-// Calculate age from date of birth
-document.getElementById('tanggalLahir').addEventListener('change', function() {
-    const dob = new Date(this.value);
-    const today = new Date();
-    let age = today.getFullYear() - dob.getFullYear();
-    const monthDiff = today.getMonth() - dob.getMonth();
-    
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-        age--;
-    }
-    
-    document.getElementById('umur').value = age;
-    // Format tanggal ke dd/mm/yyyy
+// Format tanggal ke dd/mm/yyyy
 function formatTanggal(dateString) {
     if (!dateString) return '-';
     
@@ -48,7 +36,10 @@ document.getElementById('tanggalLahir').addEventListener('change', function() {
 document.getElementById('nama').addEventListener('input', updateDisplay);
 document.getElementById('noMR').addEventListener('input', updateDisplay);
 document.getElementById('tanggalAssessment').addEventListener('change', updateDisplay);
-document.getElementById('jenisKelamin').addEventListener('change', updateDisplay);
+document.getElementById('jenisKelamin').addEventListener('change', function() {
+    updateDisplay();
+    calculateTotal();
+});
 
 // Calculate age score based on gender
 function calculateAgeScore() {
@@ -59,15 +50,12 @@ function calculateAgeScore() {
     if (gender === 'Laki-laki') {
         ageScore = age;
     } else if (gender === 'Perempuan') {
-        ageScore = age - 10;
+        ageScore = Math.max(0, age - 10);
     }
     
     document.getElementById('scoreUsia').textContent = ageScore;
     return ageScore;
 }
-
-// Gender change listener
-document.getElementById('jenisKelamin').addEventListener('change', calculateTotal);
 
 // Handle checkbox changes
 document.querySelectorAll('.score-checkbox').forEach(checkbox => {
@@ -133,12 +121,12 @@ function printAndDownload() {
     // Update display sebelum print
     updateDisplay();
     
+    // Set document title untuk PDF
+    document.title = filename;
+    
     // Trigger print dialog
     setTimeout(() => {
         window.print();
-        
-        // Set document title untuk PDF
-        document.title = filename;
     }, 100);
 }
 
@@ -165,5 +153,8 @@ function resetForm() {
     }
 }
 
-// Initialize
-calculateTotal();
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    calculateTotal();
+    updateDisplay();
+});
