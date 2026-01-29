@@ -10,8 +10,25 @@ document.getElementById('tanggalLahir').addEventListener('change', function() {
     }
     
     document.getElementById('umur').value = age;
+    updateDisplay();
     calculateTotal();
 });
+
+// Update display values untuk print
+function updateDisplay() {
+    document.getElementById('displayNama').textContent = document.getElementById('nama').value || '-';
+    document.getElementById('displayTanggalLahir').textContent = document.getElementById('tanggalLahir').value || '-';
+    document.getElementById('displayUmur').textContent = (document.getElementById('umur').value || '-') + (document.getElementById('umur').value ? ' Tahun' : '');
+    document.getElementById('displayNoMR').textContent = document.getElementById('noMR').value || '-';
+    document.getElementById('displayTanggalAssessment').textContent = document.getElementById('tanggalAssessment').value || '-';
+    document.getElementById('displayJenisKelamin').textContent = document.getElementById('jenisKelamin').value || '-';
+}
+
+// Update display ketika input berubah
+document.getElementById('nama').addEventListener('input', updateDisplay);
+document.getElementById('noMR').addEventListener('input', updateDisplay);
+document.getElementById('tanggalAssessment').addEventListener('change', updateDisplay);
+document.getElementById('jenisKelamin').addEventListener('change', updateDisplay);
 
 // Calculate age score based on gender
 function calculateAgeScore() {
@@ -19,9 +36,9 @@ function calculateAgeScore() {
     const gender = document.getElementById('jenisKelamin').value;
     
     let ageScore = 0;
-    if (gender === 'L') {
+    if (gender === 'Laki-laki') {
         ageScore = age;
-    } else if (gender === 'P') {
+    } else if (gender === 'Perempuan') {
         ageScore = age - 10;
     }
     
@@ -93,6 +110,9 @@ function printAndDownload() {
     // Generate filename: "Nama Pasien - PSI Score Checklist"
     const filename = `${namaPasien} - PSI Score Checklist`;
     
+    // Update display sebelum print
+    updateDisplay();
+    
     // Trigger print dialog
     setTimeout(() => {
         window.print();
@@ -121,6 +141,7 @@ function resetForm() {
         document.getElementById('mortalityRate').textContent = '-';
         document.getElementById('dpjpDisplay').textContent = '';
         document.getElementById('umur').value = '';
+        updateDisplay();
     }
 }
 
