@@ -352,8 +352,8 @@ h1 {
     /* Patient Info + Total Score SIDE BY SIDE */
     .patient-total-wrapper {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        grid-template-columns: 48% 48%;
+        gap: 4%;
         margin-bottom: 20px;
         page-break-inside: avoid;
     }
