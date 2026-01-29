@@ -112,22 +112,44 @@ document.getElementById('namaDPJP').addEventListener('input', function() {
 });
 
 // Print and Download dengan nama file otomatis
+// Perbaikan fungsi Print and Download dengan Validasi Lengkap
 function printAndDownload() {
-    const namaPasien = document.getElementById('nama').value || 'Pasien';
-    
-    // Generate filename: "Nama Pasien - PSI Score Checklist"
-    const filename = `${namaPasien} - PSI Score Checklist`;
-    
-    // Update display sebelum print
+    // 1. Ambil semua nilai input untuk validasi
+    const nama = document.getElementById('nama').value;
+    const tglLahir = document.getElementById('tanggalLahir').value;
+    const noMR = document.getElementById('noMR').value;
+    const tglAssessment = document.getElementById('tanggalAssessment').value;
+    const jenisKelamin = document.getElementById('jenisKelamin').value;
+    const namaDPJP = document.getElementById('namaDPJP').value;
+
+    // 2. Cek apakah semua field utama sudah diisi
+    if (!nama || !tglLahir || !noMR || !tglAssessment || !jenisKelamin || !namaDPJP) {
+        alert("Mohon lengkapi semua data pasien dan nama DPJP sebelum mencetak.");
+        return;
+    }
+
+    // 3. Validasi No RM: Harus berisi angka dan tepat 10 digit
+    const noMRRegex = /^\d{10}$/; 
+    if (!noMRRegex.test(noMR)) {
+        alert("Nomor Medical Record wajib berisi 10 digit angka.");
+        return;
+    }
+
+    // 4. Update tampilan display sebelum dicetak
     updateDisplay();
-    
-    // Set document title untuk PDF
-    document.title = filename;
-    
-    // Trigger print dialog
+
+    // 5. Set Judul Dokumen otomatis untuk nama file Save PDF
+    // Format: "Nama Pasien - PSI Score"
+    const originalTitle = document.title;
+    document.title = `${nama} - PSI Score`;
+
+    // 6. Trigger jendela print
+    window.print();
+
+    // 7. Kembalikan judul halaman ke aslinya setelah print selesai
     setTimeout(() => {
-        window.print();
-    }, 100);
+        document.title = originalTitle;
+    }, 1000);
 }
 
 // Reset form
