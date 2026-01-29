@@ -22,36 +22,60 @@
             <h2 class="form-title">Pneumonia Severity Index</h2>
 
             <!-- Data Pasien - Format Sederhana Inline -->
-            <div class="patient-info">
-                <div class="info-line">
-                    <span class="label">Nama</span>
-                    <span class="separator">:</span>
-                    <span class="value" id="displayNama">-</span>
+                        <!-- Data Pasien dan Total Score - Side by Side Layout -->
+            <div class="patient-total-container">
+                <!-- Kolom Kiri: Patient Info -->
+                <div class="patient-info">
+                    <div class="info-line">
+                        <span class="label">Nama</span>
+                        <span class="separator">:</span>
+                        <span class="value" id="displayNama">-</span>
+                    </div>
+                    <div class="info-line">
+                        <span class="label">Tanggal Lahir</span>
+                        <span class="separator">:</span>
+                        <span class="value" id="displayTanggalLahir">-</span>
+                    </div>
+                    <div class="info-line">
+                        <span class="label">Umur</span>
+                        <span class="separator">:</span>
+                        <span class="value" id="displayUmur">-</span>
+                    </div>
+                    <div class="info-line">
+                        <span class="label">No. Medical Record</span>
+                        <span class="separator">:</span>
+                        <span class="value" id="displayNoMR">-</span>
+                    </div>
+                    <div class="info-line">
+                        <span class="label">Tanggal Assessment</span>
+                        <span class="separator">:</span>
+                        <span class="value" id="displayTanggalAssessment">-</span>
+                    </div>
+                    <div class="info-line">
+                        <span class="label">Jenis Kelamin</span>
+                        <span class="separator">:</span>
+                        <span class="value" id="displayJenisKelamin">-</span>
+                    </div>
                 </div>
-                <div class="info-line">
-                    <span class="label">Tanggal Lahir</span>
-                    <span class="separator">:</span>
-                    <span class="value" id="displayTanggalLahir">-</span>
-                </div>
-                <div class="info-line">
-                    <span class="label">Umur</span>
-                    <span class="separator">:</span>
-                    <span class="value" id="displayUmur">-</span>
-                </div>
-                <div class="info-line">
-                    <span class="label">No. Medical Record</span>
-                    <span class="separator">:</span>
-                    <span class="value" id="displayNoMR">-</span>
-                </div>
-                <div class="info-line">
-                    <span class="label">Tanggal Assessment</span>
-                    <span class="separator">:</span>
-                    <span class="value" id="displayTanggalAssessment">-</span>
-                </div>
-                <div class="info-line">
-                    <span class="label">Jenis Kelamin</span>
-                    <span class="separator">:</span>
-                    <span class="value" id="displayJenisKelamin">-</span>
+
+                <!-- Kolom Kanan: Total Score -->
+                <div class="total-section">
+                    <div class="total-line">
+                        <span class="total-label">Total PSI Score:</span>
+                        <span class="total-value" id="totalScore">0</span>
+                    </div>
+                    <div class="total-line">
+                        <span class="total-label">Risiko:</span>
+                        <span class="total-value" id="risiko">-</span>
+                    </div>
+                    <div class="total-line">
+                        <span class="total-label">Kelas Risiko:</span>
+                        <span class="total-value" id="kelasRisiko">-</span>
+                    </div>
+                    <div class="total-line">
+                        <span class="total-label">Mortality Rate:</span>
+                        <span class="total-value" id="mortalityRate">-</span>
+                    </div>
                 </div>
             </div>
 
