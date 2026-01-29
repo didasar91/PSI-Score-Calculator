@@ -16,60 +16,78 @@
         <div id="printableArea">
             <!-- Header untuk print -->
             <div class="print-header">
-                <img src="https://github.com/didasar91/PSI-Score-Calculator/blob/main/header.jpg" alt="Murni Teguh Memorial Hospital" class="header-image">
+                <img src="https://github.com/didasar91/PSI-Score-Calculator/blob/main/header.jpg?raw=true" alt="Murni Teguh Memorial Hospital" class="header-image">
             </div>
 
             <h2 class="form-title">Pneumonia Severity Index</h2>
 
-                        <!-- Data Pasien - Layout Baru -->
+            <!-- Data Pasien - Format Sederhana Inline -->
             <div class="patient-info">
-                <!-- Baris 1: Nama Full Width -->
-                <div class="info-row-full">
-                    <div class="info-group">
-                        <label class="label-left">Nama</label>
-                        <input type="text" id="nama" placeholder="Nama Lengkap Pasien" class="input-right">
-                    </div>
+                <div class="info-line">
+                    <span class="label">Nama</span>
+                    <span class="separator">:</span>
+                    <span class="value" id="displayNama">-</span>
                 </div>
-
-                <!-- Baris 2: Tanggal Lahir | Umur -->
-                <div class="info-row-two-col">
-                    <div class="info-group">
-                        <label class="label-left">Tanggal Lahir</label>
-                        <input type="date" id="tanggalLahir" class="input-right">
-                    </div>
-                    <div class="info-group">
-                        <label class="label-left">Umur</label>
-                        <input type="number" id="umur" placeholder="Tahun" readonly class="input-right">
-                    </div>
+                <div class="info-line">
+                    <span class="label">Tanggal Lahir</span>
+                    <span class="separator">:</span>
+                    <span class="value" id="displayTanggalLahir">-</span>
                 </div>
-
-                <!-- Baris 3: No. Medical Record | Tanggal Assessment -->
-                <div class="info-row-two-col">
-                    <div class="info-group">
-                        <label class="label-left">No. Medical Record</label>
-                        <input type="text" id="noMR" placeholder="No. Medical Record" class="input-right">
-                    </div>
-                    <div class="info-group">
-                        <label class="label-left">Tanggal Assessment</label>
-                        <input type="date" id="tanggalAssessment" class="input-right">
-                    </div>
+                <div class="info-line">
+                    <span class="label">Umur</span>
+                    <span class="separator">:</span>
+                    <span class="value" id="displayUmur">-</span>
                 </div>
-
-                <!-- Baris 4: Jenis Kelamin -->
-                <div class="info-row-full">
-                    <div class="info-group">
-                        <label class="label-left">Jenis Kelamin</label>
-                        <select id="jenisKelamin" class="dropdown-compact">
-                            <option value="">Pilih</option>
-                            <option value="L">Laki-laki</option>
-                            <option value="P">Perempuan</option>
-                        </select>
-                    </div>
+                <div class="info-line">
+                    <span class="label">No. Medical Record</span>
+                    <span class="separator">:</span>
+                    <span class="value" id="displayNoMR">-</span>
+                </div>
+                <div class="info-line">
+                    <span class="label">Tanggal Assessment</span>
+                    <span class="separator">:</span>
+                    <span class="value" id="displayTanggalAssessment">-</span>
+                </div>
+                <div class="info-line">
+                    <span class="label">Jenis Kelamin</span>
+                    <span class="separator">:</span>
+                    <span class="value" id="displayJenisKelamin">-</span>
                 </div>
             </div>
 
+            <!-- Input Form Tersembunyi untuk Edit -->
+            <div class="input-form screen-only">
+                <div class="form-group">
+                    <label>Nama:</label>
+                    <input type="text" id="nama" placeholder="Nama Lengkap Pasien">
+                </div>
+                <div class="form-group">
+                    <label>Tanggal Lahir:</label>
+                    <input type="date" id="tanggalLahir">
+                </div>
+                <div class="form-group">
+                    <label>Umur:</label>
+                    <input type="number" id="umur" placeholder="Tahun" readonly>
+                </div>
+                <div class="form-group">
+                    <label>No. Medical Record:</label>
+                    <input type="text" id="noMR" placeholder="No. Medical Record">
+                </div>
+                <div class="form-group">
+                    <label>Tanggal Assessment:</label>
+                    <input type="date" id="tanggalAssessment">
+                </div>
+                <div class="form-group">
+                    <label>Jenis Kelamin:</label>
+                    <select id="jenisKelamin">
+                        <option value="">Pilih</option>
+                        <option value="Laki-laki">Laki-laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                    </select>
+                </div>
+            </div>
 
-            <!-- Scoring Table -->
+            <!-- Scoring Table - Simple Format -->
             <table class="scoring-table">
                 <thead>
                     <tr>
@@ -85,7 +103,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="pantiWerda">
+                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="pantiWerda" data-label="Penghuni Panti Werda">
                                 Penghuni Panti Werda
                             </label>
                         </td>
@@ -105,7 +123,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="30" data-field="keganasan">
+                                <input type="checkbox" class="score-checkbox" data-score="30" data-field="keganasan" data-label="Keganasan">
                                 Keganasan
                             </label>
                         </td>
@@ -114,7 +132,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="20" data-field="penyakitHati">
+                                <input type="checkbox" class="score-checkbox" data-score="20" data-field="penyakitHati" data-label="Penyakit Hati">
                                 Penyakit Hati
                             </label>
                         </td>
@@ -123,7 +141,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="jantungKongestif">
+                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="jantungKongestif" data-label="Penyakit Jantung Kongestif">
                                 Penyakit Jantung Kongestif
                             </label>
                         </td>
@@ -132,7 +150,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="serebroVaskular">
+                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="serebroVaskular" data-label="Penyakit Serebro Vaskular">
                                 Penyakit Serebro Vaskular
                             </label>
                         </td>
@@ -141,7 +159,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="penyakitGinjal">
+                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="penyakitGinjal" data-label="Penyakit Ginjal">
                                 Penyakit Ginjal
                             </label>
                         </td>
@@ -161,7 +179,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="20" data-field="gangguanKesadaran">
+                                <input type="checkbox" class="score-checkbox" data-score="20" data-field="gangguanKesadaran" data-label="Gangguan Kesadaran">
                                 Gangguan Kesadaran
                             </label>
                         </td>
@@ -170,7 +188,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="20" data-field="frekuensiNafas">
+                                <input type="checkbox" class="score-checkbox" data-score="20" data-field="frekuensiNafas" data-label="Frekuensi Nafas >30 x/menit">
                                 Frekuensi Nafas >30 x/menit
                             </label>
                         </td>
@@ -179,7 +197,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="20" data-field="tekananDarah">
+                                <input type="checkbox" class="score-checkbox" data-score="20" data-field="tekananDarah" data-label="Tekanan darah Sistolik <90 mmHg">
                                 Tekanan darah Sistolik <90 mmHg
                             </label>
                         </td>
@@ -188,7 +206,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="15" data-field="suhuTubuh">
+                                <input type="checkbox" class="score-checkbox" data-score="15" data-field="suhuTubuh" data-label="Suhu Tubuh <35° C atau > 40° C">
                                 Suhu Tubuh <35° C atau > 40° C
                             </label>
                         </td>
@@ -197,7 +215,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="frekuensiNadi">
+                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="frekuensiNadi" data-label="Frekuensi Nadi >125 x/menit">
                                 Frekuensi Nadi >125 x/menit
                             </label>
                         </td>
@@ -217,7 +235,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="30" data-field="ph">
+                                <input type="checkbox" class="score-checkbox" data-score="30" data-field="ph" data-label="pH <7.35">
                                 pH <7.35
                             </label>
                         </td>
@@ -226,7 +244,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="20" data-field="ureum">
+                                <input type="checkbox" class="score-checkbox" data-score="20" data-field="ureum" data-label="Ureum > 64.2 mg/dL">
                                 Ureum > 64.2 mg/dL
                             </label>
                         </td>
@@ -235,7 +253,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="20" data-field="natrium">
+                                <input type="checkbox" class="score-checkbox" data-score="20" data-field="natrium" data-label="Natrium < 130 mEq/L">
                                 Natrium < 130 mEq/L
                             </label>
                         </td>
@@ -244,7 +262,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="glukosa">
+                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="glukosa" data-label="Glukosa > 250 mg/dL">
                                 Glukosa > 250 mg/dL
                             </label>
                         </td>
@@ -253,7 +271,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="hematokrit">
+                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="hematokrit" data-label="Hematokrit <30%">
                                 Hematokrit <30%
                             </label>
                         </td>
@@ -262,7 +280,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="pao2">
+                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="pao2" data-label="PaO2 darah Arteri < 60 mmHg">
                                 PaO2 darah Arteri < 60 mmHg
                             </label>
                         </td>
@@ -271,7 +289,7 @@
                     <tr>
                         <td>
                             <label class="checkbox-label">
-                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="efusiPleura">
+                                <input type="checkbox" class="score-checkbox" data-score="10" data-field="efusiPleura" data-label="Efusi Pleura">
                                 Efusi Pleura
                             </label>
                         </td>
@@ -280,30 +298,30 @@
                 </tbody>
             </table>
 
-            <!-- Total Score -->
+            <!-- Total Score - Format Inline -->
             <div class="total-section">
-                <div class="total-row">
-                    <strong>Total PSI Score:</strong>
-                    <span id="totalScore" class="total-score">0</span>
+                <div class="total-line">
+                    <span class="total-label">Total PSI Score:</span>
+                    <span class="total-value" id="totalScore">0</span>
                 </div>
-                <div class="total-row">
-                    <strong>Risiko:</strong>
-                    <span id="risiko">-</span>
+                <div class="total-line">
+                    <span class="total-label">Risiko:</span>
+                    <span class="total-value" id="risiko">-</span>
                 </div>
-                <div class="total-row">
-                    <strong>Kelas Risiko:</strong>
-                    <span id="kelasRisiko">-</span>
+                <div class="total-line">
+                    <span class="total-label">Kelas Risiko:</span>
+                    <span class="total-value" id="kelasRisiko">-</span>
                 </div>
-                <div class="total-row">
-                    <strong>Mortality Rate:</strong>
-                    <span id="mortalityRate">-</span>
+                <div class="total-line">
+                    <span class="total-label">Mortality Rate:</span>
+                    <span class="total-value" id="mortalityRate">-</span>
                 </div>
             </div>
 
             <!-- DPJP -->
             <div class="dpjp-section">
                 <p>Diketahui oleh,</p>
-                <input type="text" id="namaDPJP" placeholder="Nama DPJP (contoh: dr. A B, Sp.P)" class="dpjp-input">
+                <input type="text" id="namaDPJP" placeholder="Nama DPJP (contoh: dr. SUSANTO SALIM, Sp.PD - KHOM)" class="dpjp-input screen-only">
                 <div class="dpjp-name" id="dpjpDisplay"></div>
             </div>
         </div>
