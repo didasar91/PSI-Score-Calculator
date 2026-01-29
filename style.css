@@ -41,7 +41,7 @@ h1 {
     font-weight: bold;
 }
 
-/* Patient Info */
+/* Patient Info - New Layout */
 .patient-info {
     margin-bottom: 15px;
     border: 1px solid #ddd;
@@ -50,32 +50,56 @@ h1 {
     font-size: 13px;
 }
 
-.info-row {
+/* Baris Full Width (Nama, Jenis Kelamin) */
+.info-row-full {
     display: flex;
-    gap: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+}
+
+.info-row-full .info-group {
+    width: 100%;
+}
+
+/* Baris 2 Kolom (Tanggal Lahir|Umur, No.MR|Tanggal Assessment) */
+.info-row-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 8px;
 }
 
 .info-group {
-    flex: 1;
     display: flex;
     align-items: center;
-}
-
-.info-group label {
-    font-weight: bold;
-    margin-right: 8px;
-    min-width: 110px;
     font-size: 12px;
 }
 
-.info-group input,
-.info-group select {
-    flex: 1;
-    padding: 4px;
+.label-left {
+    font-weight: bold;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-right: 5px;
+}
+
+.dots-line {
+    flex-grow: 1;
+    border-bottom: 1px dotted #333;
+    margin: 0 5px;
+}
+
+.input-right {
+    width: auto;
+    padding: 4px 6px;
     border: 1px solid #ddd;
     border-radius: 3px;
     font-size: 12px;
+    flex-shrink: 0;
+}
+
+.dropdown-compact {
+    width: auto;
+    min-width: 0;
+    padding: 4px 6px;
 }
 
 /* Scoring Table */
@@ -212,6 +236,8 @@ h1 {
 /* Print Styles */
 .print-header {
     display: none;
+    margin: 0 0 3mm 0;
+    padding: 0;
 }
 
 .header-image {
@@ -256,14 +282,17 @@ h1 {
 
     .print-header {
         display: block !important;
-        margin: 0 0 3mm 0;
+        margin: 0 0 2mm 0;
         padding: 0;
-        height: 70px;
-        width: 100%;
-        background-size: contain !important;
-        background-repeat: no-repeat !important;
-        background-position: center top !important;
         page-break-after: avoid;
+    }
+
+    .header-image {
+        width: 100%;
+        height: auto;
+        display: block;
+        max-height: 28mm;
+        object-fit: contain;
     }
 
     h1 {
@@ -275,101 +304,108 @@ h1 {
     }
 
     .form-title {
-        margin: 2mm 0;
-        font-size: 13px;
+        margin: 1.5mm 0;
+        font-size: 12px;
         page-break-after: avoid;
     }
 
     .patient-info {
         margin-bottom: 3mm;
-        padding: 3mm;
+        padding: 2mm;
         page-break-inside: avoid;
-        font-size: 9px;
+        font-size: 8px;
+        border: 0.5px solid #ddd;
     }
 
-    .info-row {
-        gap: 3mm;
-        margin-bottom: 2mm;
+    .info-row-full,
+    .info-row-two-col {
+        margin-bottom: 1.5mm;
+    }
+
+    .info-row-two-col {
+        gap: 10px;
     }
 
     .info-group {
-        font-size: 9px;
+        font-size: 8px;
     }
 
-    .info-group label {
-        min-width: 30mm;
-        font-size: 9px;
+    .label-left {
+        font-size: 8px;
     }
 
-    .info-group input,
-    .info-group select {
-        font-size: 9px;
-        padding: 1mm;
+    .input-right {
+        font-size: 8px;
+        padding: 0.5mm 1mm;
+    }
+
+    .dots-line {
+        margin: 0 2mm;
     }
 
     .scoring-table {
-        margin-bottom: 2mm;
+        margin-bottom: 1.5mm;
         page-break-inside: avoid;
-        font-size: 9px;
+        font-size: 8px;
     }
 
     .scoring-table th,
     .scoring-table td {
-        padding: 1.5mm;
+        padding: 1mm;
         border: 0.5px solid #999;
-        font-size: 9px;
-        line-height: 1.2;
+        font-size: 8px;
+        line-height: 1.1;
     }
 
     .scoring-table th {
-        padding: 2mm;
-        font-size: 9px;
+        padding: 1.5mm;
+        font-size: 8px;
     }
 
     .checkbox-label {
-        line-height: 1.2;
+        line-height: 1.1;
     }
 
     .checkbox-label input[type="checkbox"] {
-        width: 3mm;
-        height: 3mm;
-        margin-right: 2mm;
+        width: 2.5mm;
+        height: 2.5mm;
+        margin-right: 1.5mm;
     }
 
     .score-col {
-        width: 15mm;
-        font-size: 9px;
+        width: 12mm;
+        font-size: 8px;
     }
 
     .total-section {
-        margin: 3mm 0;
-        padding: 3mm;
+        margin: 2mm 0;
+        padding: 2mm;
         page-break-inside: avoid;
-        font-size: 10px;
+        font-size: 9px;
     }
 
     .total-row {
-        margin-bottom: 2mm;
-        font-size: 10px;
+        margin-bottom: 1mm;
+        font-size: 9px;
     }
 
     .total-score {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .dpjp-section {
-        margin-top: 4mm;
-        font-size: 9px;
+        margin-top: 3mm;
+        font-size: 8px;
         page-break-inside: avoid;
     }
 
     .dpjp-section p {
-        margin-bottom: 2mm;
+        margin-bottom: 1mm;
     }
 
     .dpjp-name {
-        margin-top: 8mm;
-        font-size: 9px;
+        margin-top: 6mm;
+        font-size: 8px;
     }
 
     .dpjp-input {
@@ -384,7 +420,7 @@ h1 {
         background: transparent;
         font-weight: normal;
         color: black;
-        font-size: 9px;
+        font-size: 8px;
     }
 
     input[type="checkbox"] {
@@ -395,8 +431,9 @@ h1 {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .info-row {
-        flex-direction: column;
+    .info-row-two-col {
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
 
     .button-container {
