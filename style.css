@@ -371,7 +371,7 @@ h1 {
     .patient-info {
         border: 1px solid #333;
         padding: 2mm;
-        font-size: 14px;
+        font-size: 12px;
         background-color: #f9f9f9;
     }
 
@@ -409,7 +409,7 @@ h1 {
         padding: 2mm;
         background-color: #e8f5e9;
         border-radius: 1px;
-        font-size: 9px;
+        font-size: 12px;
     }
 
     .total-line {
@@ -490,7 +490,7 @@ h1 {
     /* DPJP SECTION */
     .dpjp-section {
         margin: 3mm 0;
-        font-size: 9px;
+        font-size: 12px;
         page-break-inside: avoid;
     }
 
@@ -501,7 +501,7 @@ h1 {
 
     .dpjp-name {
         margin-top: 8mm;
-        font-size: 9px;
+        font-size: 14px;
     }
 
     .dpjp-input {
