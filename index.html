@@ -14,41 +14,58 @@
         </div>
 
         <div id="printableArea">
-            <!-- Header untuk print dengan CSS background -->
-            <div class="print-header" style="background-image: url('https://github.com/didasar91/PSI-Score-Calculator/blob/main/header.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center top; height: 80px; width: 100%;"></div>
+            <!-- Header untuk print -->
+            <div class="print-header">
+                <img src="https://github.com/didasar91/PSI-Score-Calculator/blob/main/header.jpg" alt="Murni Teguh Memorial Hospital" class="header-image">
+            </div>
 
             <h2 class="form-title">Pneumonia Severity Index</h2>
 
-            <!-- Data Pasien -->
+            <!-- Data Pasien - Layout Baru -->
             <div class="patient-info">
-                <div class="info-row">
+                <!-- Baris 1: Nama Full Width -->
+                <div class="info-row-full">
                     <div class="info-group">
-                        <label>Nama:</label>
-                        <input type="text" id="nama" placeholder="Nama Lengkap Pasien">
-                    </div>
-                    <div class="info-group">
-                        <label>Tanggal Lahir:</label>
-                        <input type="date" id="tanggalLahir">
+                        <label class="label-left">Nama</label>
+                        <div class="dots-line"></div>
+                        <input type="text" id="nama" placeholder="Nama Lengkap Pasien" class="input-right">
                     </div>
                 </div>
-                <div class="info-row">
+
+                <!-- Baris 2: Tanggal Lahir | Umur -->
+                <div class="info-row-two-col">
                     <div class="info-group">
-                        <label>Umur:</label>
-                        <input type="number" id="umur" placeholder="Tahun" readonly>
+                        <label class="label-left">Tanggal Lahir</label>
+                        <div class="dots-line"></div>
+                        <input type="date" id="tanggalLahir" class="input-right">
                     </div>
                     <div class="info-group">
-                        <label>No. Medical Record:</label>
-                        <input type="text" id="noMR" placeholder="No. Medical Record">
+                        <label class="label-left">Umur</label>
+                        <div class="dots-line"></div>
+                        <input type="number" id="umur" placeholder="Tahun" readonly class="input-right">
                     </div>
                 </div>
-                <div class="info-row">
+
+                <!-- Baris 3: No. Medical Record | Tanggal Assessment -->
+                <div class="info-row-two-col">
                     <div class="info-group">
-                        <label>Tanggal Assessment:</label>
-                        <input type="date" id="tanggalAssessment">
+                        <label class="label-left">No. Medical Record</label>
+                        <div class="dots-line"></div>
+                        <input type="text" id="noMR" placeholder="No. Medical Record" class="input-right">
                     </div>
                     <div class="info-group">
-                        <label>Jenis Kelamin:</label>
-                        <select id="jenisKelamin">
+                        <label class="label-left">Tanggal Assessment</label>
+                        <div class="dots-line"></div>
+                        <input type="date" id="tanggalAssessment" class="input-right">
+                    </div>
+                </div>
+
+                <!-- Baris 4: Jenis Kelamin -->
+                <div class="info-row-full">
+                    <div class="info-group">
+                        <label class="label-left">Jenis Kelamin</label>
+                        <div class="dots-line"></div>
+                        <select id="jenisKelamin" class="input-right dropdown-compact">
                             <option value="">Pilih</option>
                             <option value="L">Laki-laki</option>
                             <option value="P">Perempuan</option>
@@ -291,7 +308,7 @@
             <!-- DPJP -->
             <div class="dpjp-section">
                 <p>Diketahui oleh,</p>
-                <input type="text" id="namaDPJP" placeholder="Nama DPJP (contoh: dr. SUSANTO SALIM, Sp.PD - KHOM)" class="dpjp-input">
+                <input type="text" id="namaDPJP" placeholder="Nama DPJP (contoh: dr. A, Sp.P)" class="dpjp-input">
                 <div class="dpjp-name" id="dpjpDisplay"></div>
             </div>
         </div>
