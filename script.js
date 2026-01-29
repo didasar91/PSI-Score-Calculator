@@ -86,6 +86,22 @@ document.getElementById('namaDPJP').addEventListener('input', function() {
     document.getElementById('dpjpDisplay').textContent = this.value;
 });
 
+// Print and Download dengan nama file otomatis
+function printAndDownload() {
+    const namaPasien = document.getElementById('nama').value || 'Pasien';
+    
+    // Generate filename: "Nama Pasien - PSI Score Checklist"
+    const filename = `${namaPasien} - PSI Score Checklist`;
+    
+    // Trigger print dialog
+    setTimeout(() => {
+        window.print();
+        
+        // Set document title untuk PDF
+        document.title = filename;
+    }, 100);
+}
+
 // Reset form
 function resetForm() {
     if (confirm('Apakah Anda yakin ingin mereset semua data?')) {
@@ -104,6 +120,7 @@ function resetForm() {
         document.getElementById('kelasRisiko').textContent = '-';
         document.getElementById('mortalityRate').textContent = '-';
         document.getElementById('dpjpDisplay').textContent = '';
+        document.getElementById('umur').value = '';
     }
 }
 
