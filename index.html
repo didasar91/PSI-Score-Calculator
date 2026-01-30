@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Medis - Murni Teguh Memorial Hospital</title>
+    <title>Medical Calculator - Murni Teguh Memorial Hospital</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="mode-psi">
     <div class="container">
-        <div class="header-container">
+        <div class="print-header">
             <img src="https://github.com/didasar91/PSI-Score-Calculator/blob/main/header.jpg?raw=true" alt="Murni Teguh" class="header-image">
         </div>
 
@@ -26,25 +26,25 @@
                 <div class="info-line"><span class="label">Tgl Assessment</span><span>:</span><span id="displayTglAsesmen">-</span></div>
             </div>
 
-            <div id="psi-output-box" class="total-section">
+            <div class="total-section psi-only-result">
                 <div class="total-line"><span class="total-label">PSI Score:</span><span id="totalScore">0</span></div>
                 <div class="total-line"><span class="total-label">Kelas Risiko:</span><span id="kelasRisiko">-</span></div>
-                <div class="total-line"><span class="total-label">Mortality:</span><span id="mortalityRate">-</span></div>
+                <div class="total-line"><span class="total-label">Angka Kematian:</span><span id="mortalityRate">-</span></div>
             </div>
             
-            <div id="natrium-output-box" class="total-section" style="display:none; border-color: #000;">
+            <div class="total-section natrium-only-result" style="display:none;">
                 <div class="total-line"><span class="total-label">Δ Na+ (1L):</span><span id="displayDelta">0</span> mEq/L</div>
-                <div class="total-line"><span class="total-label">Kebutuhan:</span><span id="displayBotol">0 Botol</span></div>
+                <div class="total-line"><span class="total-label">Kebutuhan:</span><span id="displayFlask">0</span> Flask</div>
             </div>
         </div>
 
         <div class="input-form screen-only">
-            <div class="form-group"><label>Nama Pasien*:</label><input type="text" id="nama"></div>
-            <div class="form-group"><label>No. MR (10 Digit)*:</label><input type="text" id="noMR" maxlength="10"></div>
-            <div class="form-group"><label>Tanggal Lahir*:</label><input type="date" id="tglLahir"></div>
-            <div class="form-group"><label>Jenis Kelamin*:</label><select id="jk"><option value="">Pilih</option><option value="L">Laki-laki</option><option value="P">Perempuan</option></select></div>
-            <div class="form-group"><label>Tgl Assessment*:</label><input type="date" id="tglAsesmen"></div>
-            <div class="form-group"><label>Berat Badan (kg)*:</label><input type="number" id="bb"></div>
+            <div class="form-group"><label>Nama Pasien:</label><input type="text" id="nama"></div>
+            <div class="form-group"><label>No. MR:</label><input type="text" id="noMR" maxlength="10"></div>
+            <div class="form-group"><label>Tanggal Lahir:</label><input type="date" id="tglLahir"></div>
+            <div class="form-group"><label>Jenis Kelamin:</label><select id="jk"><option value="">Pilih</option><option value="L">Laki-laki</option><option value="P">Perempuan</option></select></div>
+            <div class="form-group"><label>Tgl Assessment:</label><input type="date" id="tglAsesmen"></div>
+            <div class="form-group"><label>Berat Badan (kg):</label><input type="number" id="bb"></div>
         </div>
 
         <div id="calc-psi-content">
@@ -71,7 +71,7 @@
                         <tr class="section-head"><td colspan="2">Hasil Laboratorium</td></tr>
                         <tr><td><label class="checkbox-label"><input type="checkbox" class="psi-check" data-score="30" data-id="ph"> pH Arteri < 7.35 (+30)</label></td><td class="score-col" id="scorePh">0</td></tr>
                         <tr><td><label class="checkbox-label"><input type="checkbox" class="psi-check" data-score="20" data-id="ureum"> Ureum > 64.2 mg/dL (+20)</label></td><td class="score-col" id="scoreUreum">0</td></tr>
-                        <tr><td><label class="checkbox-label"><input type="checkbox" class="psi-check" data-score="20" data-id="natriumCheck"> Natrium < 130 mEq/L (+20)</label></td><td class="score-col" id="scoreNatriumCheck">0</td></tr>
+                        <tr><td><label class="checkbox-label"><input type="checkbox" class="psi-check" data-score="20" data-id="natrium"> Natrium < 130 mEq/L (+20)</label></td><td class="score-col" id="scoreNatriumCheck">0</td></tr>
                         <tr><td><label class="checkbox-label"><input type="checkbox" class="psi-check" data-score="10" data-id="glukosa"> Glukosa > 250 mg/dL (+10)</label></td><td class="score-col" id="scoreGlukosa">0</td></tr>
                         <tr><td><label class="checkbox-label"><input type="checkbox" class="psi-check" data-score="10" data-id="hematokrit"> Hematokrit < 30% (+10)</label></td><td class="score-col" id="scoreHematokrit">0</td></tr>
                         <tr><td><label class="checkbox-label"><input type="checkbox" class="psi-check" data-score="10" data-id="pao2"> PaO2 < 60 mmHg (+10)</label></td><td class="score-col" id="scorePao2">0</td></tr>
@@ -84,8 +84,8 @@
         <div id="calc-natrium-content" style="display:none;">
             <h2 class="form-title">Koreksi Hiponatremia (Adrogué-Madias)</h2>
             <div class="input-form screen-only">
-                <div class="form-group"><label>Na+ Serum (mEq/L):</label><input type="number" id="naSerum"></div>
-                <div class="form-group"><label>Target Δ Na+/24j:</label><input type="number" id="targetNa" value="8"></div>
+                <div class="form-group"><label>Na+ Serum Pasien (mEq/L):</label><input type="number" id="naSerum"></div>
+                <div class="form-group"><label>Target Kenaikan Na+ (mEq/L/24 jam):</label><input type="number" id="targetNa" value="8"></div>
                 <div class="form-group"><label>Jenis Cairan Infus:</label>
                     <select id="naInfus">
                         <option value="513">NaCl 3% (513 mEq/L)</option>
@@ -96,27 +96,23 @@
             </div>
             <div class="natrium-result-table">
                 <table class="scoring-table">
-                    <thead><tr><th>Parameter Koreksi</th><th>Hasil Perhitungan</th></tr></thead>
+                    <thead><tr><th>Parameter Perhitungan</th><th>Hasil</th></tr></thead>
                     <tbody>
-                        <tr><td>Total Body Water (TBW)</td><td><span id="txtTBW">0</span></td></tr>
-                        <tr><td>Δ Na+ Serum per 1 Liter Cairan</td><td><span id="txtDelta">0</span></td></tr>
-                        <tr><td>Total Volume Cairan Dibutuhkan</td><td><span id="txtTotalVol">0</span></td></tr>
-                        <tr style="background:#f9f9f9; font-weight:bold;"><td>Kebutuhan Botol Sediaan (500 mL)</td><td><span id="txtBotolDisplay">0 Botol</span></td></tr>
-                        <tr style="background:#f9f9f9;"><td>Kecepatan Pemberian Infus</td><td><span id="txtKecepatan">0</span></td></tr>
+                        <tr><td>Total Body Water (TBW)</td><td><span id="txtTBW">0</span> L</td></tr>
+                        <tr><td>Δ Na+ Serum per 1 Liter Cairan</td><td><span id="txtDelta">0</span> mEq/L</td></tr>
+                        <tr><td>Total Kebutuhan Cairan (untuk target)</td><td><span id="txtTotalVol">0</span> mL</td></tr>
+                        <tr style="background:#e3f2fd; font-weight:bold;"><td>Jumlah Botol/Flask (sediaan 500 ml)</td><td><span id="txtFlask">0</span> Flask</td></tr>
+                        <tr style="background:#fffde7;"><td>Kecepatan Pemberian</td><td><span id="txtKecepatan">0</span> mL/jam</td></tr>
                     </tbody>
                 </table>
+                <p class="disclaimer">*Target koreksi lazim: 8-10 mEq/L per 24 jam untuk mencegah Osmotic Demyelination Syndrome.</p>
             </div>
         </div>
 
         <div class="dpjp-section">
             <p>Diketahui oleh,</p>
-            <input type="text" id="inputDPJP" placeholder="Nama Dokter*" class="screen-only dpjp-input">
+            <input type="text" id="inputDPJP" placeholder="Nama DPJP" class="screen-only dpjp-input">
             <div id="displayDPJP" class="dpjp-name"></div>
-        </div>
-
-        <div class="screen-only button-container">
-            <button onclick="printAndDownload()" class="btn-action btn-print">Print / Save PDF</button>
-            <button onclick="location.reload()" class="btn-action btn-clear">Clear / Reset All</button>
         </div>
     </div>
     <script src="script.js"></script>
