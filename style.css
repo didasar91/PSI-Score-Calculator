@@ -77,6 +77,27 @@ body { font-family: 'Arial', sans-serif; line-height: 1.2; padding: 10px; backgr
     .input-form {
         grid-template-columns: 1fr;
     }
+    
+/* Pastikan input form muncul di webpage */
+.input-form.screen-only {
+    display: grid !important; /* Memaksa muncul di layar */
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+/* Pastikan input DPJP muncul di layar */
+.dpjp-input.screen-only {
+    display: block !important;
+    width: 100%;
+    max-width: 300px;
+    margin: 10px 0 10px auto;
+    padding: 8px;
+    border: 1px solid #ccc;
 }
 
 /* PRINT STYLES */
