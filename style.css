@@ -1,40 +1,57 @@
 * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Arial', sans-serif; line-height: 1.2; padding: 10px; background-color: #f0f2f5; font-size: 13px; }
-.container { max-width: 850px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
+.container { max-width: 850px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 
+/* Header Web View Optimization */
+.header-container { text-align: center; margin-bottom: 20px; }
+.header-image { max-width: 500px; width: 100%; height: auto; }
+
+/* Menu Tabs */
 .menu-container { display: flex; justify-content: center; gap: 5px; margin-bottom: 15px; }
-.btn-tab { padding: 10px 20px; border: none; background: #ddd; cursor: pointer; font-weight: bold; border-radius: 5px; }
+.btn-tab { padding: 10px 20px; border: none; background: #ddd; cursor: pointer; font-weight: bold; border-radius: 5px; transition: 0.3s; }
 .btn-tab.active { background: #4CAF50; color: white; }
 
+/* Display Sections */
 .patient-total-wrapper { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 10px; margin-bottom: 10px; }
 .patient-info, .total-section { border: 1px solid #ddd; padding: 10px; background: #fcfcfc; }
 .total-section { border: 2px solid #4CAF50; background: #f1f8e9; }
 .info-line, .total-line { display: flex; margin-bottom: 4px; }
 .label, .total-label { font-weight: bold; min-width: 110px; }
 
+/* Form Fields */
 .input-form { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px; padding: 10px; background: #f8f9fa; border: 1px solid #dee2e6; }
 .form-group { display: flex; flex-direction: column; gap: 2px; }
 .form-group label { font-weight: bold; font-size: 11px; }
 .form-group input, .form-group select { padding: 5px; border: 1px solid #ced4da; border-radius: 4px; }
 
+/* Table Content */
 .scoring-table { width: 100%; border-collapse: collapse; margin-bottom: 5px; }
 .scoring-table th, .scoring-table td { border: 1px solid #ccc; padding: 4px 8px; text-align: left; }
 .scoring-table thead { background: #4CAF50; color: white; }
-.section-head { background: #eee; font-weight: bold; font-size: 12px; }
+.section-head { background: #eee; font-weight: bold; font-size: 11px; }
 .score-col { width: 60px; text-align: center !important; font-weight: bold; background: #fffde7; }
 .form-title { text-align: center; margin: 10px 0; font-size: 1.2em; font-weight: bold; border-bottom: 2px solid #4CAF50; }
 
+/* DPJP Section */
 .dpjp-section { margin-top: 20px; text-align: right; }
 .dpjp-name { margin-top: 40px; font-weight: bold; border-bottom: 1px solid #000; display: inline-block; min-width: 200px; text-align: center; }
-.disclaimer { font-size: 10px; color: #666; margin-top: 5px; font-style: italic; }
 
+/* Control Buttons (Screen Only) */
+.button-container { display: flex; justify-content: center; gap: 10px; margin-top: 25px; padding-top: 15px; border-top: 1px solid #eee; }
+.btn-action { padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 14px; transition: 0.3s; }
+.btn-print { background: #4CAF50; color: white; }
+.btn-print:hover { background: #45a049; }
+.btn-clear { background: #f44336; color: white; }
+.btn-clear:hover { background: #d32f2f; }
+
+/* Print Settings */
 @media print {
     @page { size: A4; margin: 10mm; }
     body { padding: 0; background: white; font-size: 11px; }
-    .container { width: 100%; padding: 0; }
+    .container { width: 100%; padding: 0; box-shadow: none; border-radius: 0; max-width: 100%; }
     .screen-only { display: none !important; }
-    .print-header { display: block !important; margin-bottom: 5px; }
-    .header-image { width: 100%; height: auto; }
+    .header-container { margin-bottom: 5px; display: block !important; }
+    .header-image { max-width: 100%; width: 100%; }
     body.mode-psi #calc-natrium-content, body.mode-psi .natrium-only-result { display: none !important; }
     body.mode-natrium #calc-psi-content, body.mode-natrium .psi-only-result { display: none !important; }
     .scoring-table td { padding: 2px 6px; }
