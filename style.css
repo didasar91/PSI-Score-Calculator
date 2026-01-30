@@ -1,68 +1,56 @@
 * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Arial', sans-serif; line-height: 1.2; padding: 20px; background-color: #f0f2f5; font-size: 13px; }
+body { font-family: 'Arial', sans-serif; line-height: 1.2; padding: 10px; background-color: #f0f2f5; font-size: 13px; }
 .container { max-width: 850px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 
+/* Header & Menu */
 .header-container { text-align: center; margin-bottom: 20px; }
 .header-image { max-width: 500px; width: 100%; height: auto; }
-
 .menu-container { display: flex; justify-content: center; gap: 5px; margin-bottom: 15px; }
 .btn-tab { padding: 10px 20px; border: none; background: #ddd; cursor: pointer; font-weight: bold; border-radius: 5px; }
 .btn-tab.active { background: #4CAF50; color: white; }
 
+/* Patient Info & Results Box */
 .patient-total-wrapper { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 10px; margin-bottom: 10px; }
-.patient-info, .total-section { border: 1px solid #ddd; padding: 10px; background: #fcfcfc; }
-.total-section { border: 2px solid #4CAF50; background: #f1f8e9; }
+.patient-info { border: 1px solid #ddd; padding: 10px; background: #fcfcfc; }
+.total-section { border: 2px solid #4CAF50; padding: 10px; background: #f1f8e9; }
 .info-line, .total-line { display: flex; margin-bottom: 4px; }
 .label, .total-label { font-weight: bold; min-width: 110px; }
 
-.input-form { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px; padding: 10px; background: #f8f9fa; border: 1px solid #dee2e6; }
-.form-group { display: flex; flex-direction: column; gap: 2px; }
-.form-group label { font-weight: bold; font-size: 11px; }
-.form-group input, .form-group select { padding: 5px; border: 1px solid #ced4da; border-radius: 4px; }
-
+/* Tables */
 .scoring-table { width: 100%; border-collapse: collapse; margin-bottom: 5px; }
 .scoring-table th, .scoring-table td { border: 1px solid #ccc; padding: 4px 8px; text-align: left; }
-.scoring-table thead { background: #4CAF50; color: white; }
+.scoring-table thead { background-color: #4CAF50; color: white; }
 .section-head { background: #eee; font-weight: bold; font-size: 11px; }
 .score-col { width: 60px; text-align: center !important; font-weight: bold; background: #fffde7; }
 .form-title { text-align: center; margin: 10px 0; font-size: 1.2em; font-weight: bold; border-bottom: 2px solid #4CAF50; }
 
+/* Natrium Row Highlight */
+.highlight-row { background: #e3f2fd; font-weight: bold; }
+
+/* DPJP */
 .dpjp-section { margin-top: 20px; text-align: right; }
 .dpjp-name { margin-top: 40px; font-weight: bold; border-bottom: 1px solid #000; display: inline-block; min-width: 200px; text-align: center; }
 
-.button-container { display: flex; justify-content: center; gap: 10px; margin-top: 25px; }
-.btn-action { padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-.btn-print { background: #4CAF50; color: white; }
-.btn-clear { background: #f44336; color: white; }
-
-/* PRINT OPTIMIZATION */
+/* PRINT STYLES */
 @media print {
     @page { size: A4; margin: 8mm; }
     
-    /* Force Background to White */
-    html, body { background: #ffffff !important; background-color: #ffffff !important; padding: 0; margin: 0; width: 100%; height: 100%; }
-    
+    html, body { background: #ffffff !important; padding: 0; margin: 0; width: 100%; height: 100%; }
     .container { width: 100%; padding: 0; box-shadow: none; border: none; background: #ffffff !important; border-radius: 0; max-width: 100%; margin: 0; }
-    
     .screen-only { display: none !important; }
+    .header-image { max-width: 90%; }
+
+    /* Hasil Tetap Berwarna Background */
+    .total-section { background: #f1f8e9 !important; border: 2px solid #4CAF50 !important; }
+    .highlight-row { background: #f0f9ff !important; border: 1px solid #000 !important; }
     
-    .header-container { display: block !important; margin-bottom: 5px; text-align: center; }
-    .header-image { max-width: 100%; width: 100%; }
-    
-    /* Clean Boxes for Print */
-    .patient-info, .total-section { background: transparent !important; border: 1px solid #000 !important; color: #000; }
-    .total-section { border-width: 2px !important; }
-    
-    /* Mode Handling */
-    body.mode-psi #calc-natrium-content, body.mode-psi #natrium-output-box { display: none !important; }
-    body.mode-natrium #calc-psi-content, body.mode-natrium #psi-output-box { display: none !important; }
-    
-    /* Table Print Adjustment */
-    .scoring-table thead { background: #eee !important; color: #000 !important; }
-    .scoring-table th, .scoring-table td { border: 1px solid #000 !important; padding: 2px 6px; }
+    /* Tabel Checklist Putih Bersih */
+    .scoring-table thead { background: #f2f2f2 !important; color: #000 !important; }
+    .scoring-table th, .scoring-table td { border: 1px solid #000 !important; }
     .section-head { background: #f2f2f2 !important; }
     .score-col { background: transparent !important; border: 1px solid #000 !important; }
-    
-    .form-title { margin: 5px 0; border-bottom: 1px solid #000; }
-    .dpjp-name { border-bottom: 1px solid #000; }
+
+    /* Mode Visibility */
+    body.mode-psi #calc-natrium-content, body.mode-psi #natrium-output-box { display: none !important; }
+    body.mode-natrium #calc-psi-content, body.mode-natrium #psi-output-box { display: none !important; }
 }
