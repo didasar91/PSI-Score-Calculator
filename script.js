@@ -4,6 +4,7 @@ function showCalculator(mode) {
     currentMode = mode;
     document.body.className = 'mode-' + mode;
     const isPsi = (mode === 'psi');
+    
     document.getElementById('calc-psi-content').style.display = isPsi ? 'block' : 'none';
     document.getElementById('calc-natrium-content').style.display = !isPsi ? 'block' : 'none';
     
@@ -14,7 +15,7 @@ function showCalculator(mode) {
     document.getElementById('btn-natrium').classList.toggle('active', !isPsi);
 }
 
-// Data Binding
+// Data Binding Listeners
 document.getElementById('nama').addEventListener('input', e => document.getElementById('displayNama').textContent = e.target.value || '-');
 document.getElementById('noMR').addEventListener('input', e => document.getElementById('displayNoMR').textContent = e.target.value || '-');
 document.getElementById('inputDPJP').addEventListener('input', e => document.getElementById('displayDPJP').textContent = e.target.value || '');
@@ -29,6 +30,7 @@ document.getElementById('jk').addEventListener('change', updateStats);
 function updateStats() {
     const tgl = document.getElementById('tglLahir').value;
     if(!tgl) return;
+    
     const dob = new Date(tgl);
     const today = new Date();
     let age = today.getFullYear() - dob.getFullYear();
@@ -38,12 +40,14 @@ function updateStats() {
     document.getElementById('displayTglLahir').textContent = tgl;
     document.getElementById('displayUmur').textContent = age + " Tahun";
     const jk = document.getElementById('jk').value;
+    
     document.getElementById('scoreUsia').textContent = (jk === 'P') ? Math.max(0, age - 10) : age;
     
     calculatePSI();
     calculateNatrium();
 }
 
+// PSI Checklist Scoring
 document.querySelectorAll('.psi-check').forEach(box => {
     box.addEventListener('change', () => {
         const id = box.dataset.id;
@@ -59,23 +63,24 @@ function calculatePSI() {
     document.querySelectorAll('.psi-check').forEach(c => { if(c.checked) total += parseInt(c.dataset.score); });
     document.getElementById('totalScore').textContent = total;
     
-    let kelas = "I", mort = "0.1%"; [cite: 49]
-    if(total > 130) { kelas = "V"; mort = "29.2%"; } [cite: 49]
-    else if(total >= 91) { kelas = "IV"; mort = "8.2%"; } [cite: 49]
-    else if(total >= 71) { kelas = "III"; mort = "2.8%"; } [cite: 49]
-    else if(total > 0) { kelas = "II"; mort = "0.6%"; } [cite: 49]
+    let kelas = "I", mort = "0.1%";
+    if(total > 130) { kelas = "V"; mort = "29.2%"; }
+    else if(total >= 91) { kelas = "IV"; mort = "8.2%"; }
+    else if(total >= 71) { kelas = "III"; mort = "2.8%"; }
+    else if(total > 0) { kelas = "II"; mort = "0.6%"; }
+    
     document.getElementById('kelasRisiko').textContent = kelas;
     document.getElementById('mortalityRate').textContent = mort;
 }
 
+// Natrium Correction (Adrogue-Madias Formula)
 function calculateNatrium() {
     const bb = parseFloat(document.getElementById('bb').value);
     const naSerum = parseFloat(document.getElementById('naSerum').value);
     const naInfus = parseFloat(document.getElementById('naInfus').value);
     const target = parseFloat(document.getElementById('targetNa').value) || 8;
     const jk = document.getElementById('jk').value;
-    const ageText = document.getElementById('displayUmur').textContent;
-    const age = parseInt(ageText) || 30;
+    const age = parseInt(document.getElementById('displayUmur').textContent) || 30;
 
     if(!bb || !naSerum || !jk) return;
 
