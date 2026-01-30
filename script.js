@@ -15,7 +15,6 @@ function showCalculator(mode) {
     document.getElementById('btn-natrium').classList.toggle('active', !isPsi);
 }
 
-// Data Binding Listeners
 document.getElementById('nama').addEventListener('input', e => document.getElementById('displayNama').textContent = e.target.value || '-');
 document.getElementById('noMR').addEventListener('input', e => document.getElementById('displayNoMR').textContent = e.target.value || '-');
 document.getElementById('inputDPJP').addEventListener('input', e => document.getElementById('displayDPJP').textContent = e.target.value || '');
@@ -39,8 +38,6 @@ function updateStats() {
     document.getElementById('displayTglLahir').textContent = tgl;
     document.getElementById('displayUmur').textContent = age + " Tahun";
     const jk = document.getElementById('jk').value;
-    
-    // Skor PSI Usia (Berdasarkan PDF Rekomendasi)
     document.getElementById('scoreUsia').textContent = (jk === 'P') ? Math.max(0, age - 10) : age;
     
     calculatePSI();
@@ -83,8 +80,7 @@ function calculateNatrium() {
 
     if(!bb || !naSerum || !jk) return;
 
-    // TBW Berdasarkan JK dan Usia (Anak & Lansia)
-    let factor = 0.6; // Default Anak/Pria Dewasa
+    let factor = 0.6; 
     if (age > 18) {
         if (jk === 'P') {
             factor = (age > 65) ? 0.45 : 0.5;
@@ -105,9 +101,7 @@ function calculateNatrium() {
     document.getElementById('txtTBW').textContent = tbw.toFixed(1) + " L";
     document.getElementById('txtDelta').textContent = deltaPerLiter.toFixed(2) + " mEq/L";
     document.getElementById('txtTotalVol').textContent = Math.round(totalVolumeMl) + " mL";
-    
-    const botolText = botolCount + " Botol " + namaCairan + " 500 mL";
-    document.getElementById('txtBotolDisplay').textContent = botolText;
+    document.getElementById('txtBotolDisplay').textContent = botolCount + " Botol " + namaCairan + " 500 mL";
     document.getElementById('txtKecepatan').textContent = speed.toFixed(1) + " mL/jam";
     
     document.getElementById('displayDelta').textContent = deltaPerLiter.toFixed(2);
