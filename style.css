@@ -34,24 +34,58 @@ body { font-family: 'Arial', sans-serif; line-height: 1.2; padding: 10px; backgr
 
 /* PRINT STYLES */
 @media print {
-    /* Memaksa latar belakang tabel tetap berwarna saat dicetak */
-    .total-section {
-        background-color: #e8f5e9 !important; /* Hijau muda */
+    @page { 
+        size: A4; 
+        margin: 8mm; 
+    }
+    
+    /* Memaksa latar belakang menjadi putih bersih */
+    html, body { 
+        background: #ffffff !important; 
+        color: #000000 !important;
+    }
+
+    .container { 
+        width: 100%; 
+        padding: 0; 
+        box-shadow: none; 
+        border: none; 
+        background: #ffffff !important; 
+    }
+
+    .screen-only { display: none !important; }
+
+    /* MEMAKSA WARNA BOX MUNCUL */
+    .total-section { 
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        background-color: #f1f8e9 !important; /* Hijau untuk PSI */
         border: 2px solid #4CAF50 !important;
     }
 
-    .scoring-table thead {
-        background-color: #4CAF50 !important; /* Hijau header */
+    .highlight-row, .highlight-natrium { 
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        background-color: #e3f2fd !important; /* Biru untuk Natrium */
+        border: 1px solid #000 !important;
+    }
+
+    /* Tabel Checklist */
+    .scoring-table thead { 
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        background-color: #4CAF50 !important; 
         color: white !important;
     }
 
-    .section-head {
-        background-color: #eee !important; /* Abu-abu header sub-tabel */
+    .section-head { 
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        background-color: #eeeeee !important; 
     }
 
-    /* Penyesuaian untuk mode Natrium jika ada */
-    .natrium-box {
-        background-color: #e3f2fd !important; /* Biru muda */
-        border: 2px solid #2196F3 !important;
+    .score-col { 
+        background-color: transparent !important; 
+        border: 1px solid #000 !important; 
     }
 }
