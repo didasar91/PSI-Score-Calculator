@@ -64,7 +64,7 @@ body { font-family: 'Arial', sans-serif; line-height: 1.2; padding: 10px; backgr
     html, body { background: #ffffff !important; padding: 0; margin: 0; }
     .container { width: 100%; padding: 0; box-shadow: none; border: none; background: #ffffff !important; max-width: 100%; margin: 0; }
     .screen-only { display: none !important; }
-    .header-image { max-width: 85%; display: block; margin: 0 auto; }
+    .header-image { max-width: 100%; display: block; margin: 0 auto; }
     
     .psi-box { background-color: #f1f8e9 !important; border: 2px solid #4CAF50 !important; }
     .natrium-box { background-color: #e3f2fd !important; border: 2px solid #2196F3 !important; }
