@@ -1,23 +1,25 @@
 let currentMode = 'psi';
 
+// --- FUNGSI UTAMA ---
 function showCalculator(mode) {
     currentMode = mode;
     document.body.className = 'mode-' + mode;
     
-    // 1. Atur Tab Menu
+    // 1. Tab Active State
     document.querySelectorAll('.btn-tab').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`btn-${mode}`).classList.add('active');
 
-    // 2. Tampilkan Konten Hasil & Box Hijau
+    // 2. Control Output Boxes (Bug 2 & 4 Fix)
+    // Sembunyikan semua dulu
     ['psi', 'natrium', 'kalium'].forEach(m => {
-        const content = document.getElementById(`calc-${m}-content`);
-        const output = document.getElementById(`${m}-output-box`);
-        if (content) content.style.display = (m === mode) ? 'block' : 'none';
-        if (output) output.style.display = (m === mode) ? 'block' : 'none';
+        document.getElementById(`calc-${m}-content`).style.display = 'none';
+        document.getElementById(`${m}-output-box`).style.display = 'none';
     });
+    // Tampilkan yang aktif saja
+    document.getElementById(`calc-${mode}-content`).style.display = 'block';
+    document.getElementById(`${mode}-output-box`).style.display = 'flex'; // Gunakan flex agar centering content jalan
 
-    // 3. Atur Input Form yang Relevan (Agar form tidak kepanjangan)
-    // Kita sembunyikan input spesifik yang tidak dipakai di mode tersebut
+    // 3. Control Form Inputs
     document.getElementById('input-psi-group').style.display = (mode === 'psi') ? 'contents' : 'none';
     document.getElementById('input-natrium-group').style.display = (mode === 'natrium') ? 'contents' : 'none';
     document.getElementById('input-kalium-group').style.display = (mode === 'kalium') ? 'contents' : 'none';
@@ -25,7 +27,7 @@ function showCalculator(mode) {
     updateStats();
 }
 
-// FORMAT TANGGAL INDONESIA (dd MMM yyyy)
+// FORMAT TANGGAL INDONESIA
 function formatDateIndo(dateString) {
     if (!dateString) return "-";
     const date = new Date(dateString);
@@ -34,6 +36,7 @@ function formatDateIndo(dateString) {
     return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
+// INIT SAAT LOAD
 document.addEventListener('DOMContentLoaded', () => {
     const inputIds = [
         'nama', 'noMR', 'inputDPJP', 'tglAsesmen', 'tglLahir', 'jk', 'bb',
@@ -52,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.psi-check').forEach(box => {
         box.addEventListener('change', updateStats);
     });
+
+    // Bug 4 Fix: Paksa jalankan mode PSI saat awal load agar kotak hijau muncul
+    showCalculator('psi');
 });
 
 function updateStats() {
@@ -59,8 +65,6 @@ function updateStats() {
     setText('displayNama', getValue('nama') || '-');
     setText('displayNoMR', getValue('noMR') || '-');
     setText('displayDPJP', getValue('inputDPJP') || '');
-    
-    // FORMAT TANGGAL
     setText('displayTglAsesmen', formatDateIndo(getValue('tglAsesmen')));
     setText('displayTglLahir', formatDateIndo(getValue('tglLahir')));
     
@@ -79,9 +83,13 @@ function updateStats() {
     try { calculateKalium(); } catch(e) {}
 }
 
+// --- PSI CALCULATOR (Bug 3 Fix: Detail Checklist) ---
 function calculatePSI() {
-    // ... Logika PSI Anda (tidak berubah) ...
-    let total = 0; // Tambahkan logika umur
+    let total = 0;
+    let detailsTable = `<table class="scoring-table"><thead><tr><th>Parameter Terpilih</th><th style="width:50px">Skor</th></tr></thead><tbody>`;
+    let hasFactors = false;
+
+    // Skor Umur & Sex
     const tgl = getValue('tglLahir');
     if(tgl) {
          const dob = new Date(tgl);
@@ -89,12 +97,25 @@ function calculatePSI() {
          let age = today.getFullYear() - dob.getFullYear();
          if (today.getMonth() < dob.getMonth() || (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) age--;
          const jk = getValue('jk');
-         total = (jk === 'P') ? Math.max(0, age - 10) : age;
+         let ageScore = (jk === 'P') ? Math.max(0, age - 10) : age;
+         
+         total += ageScore;
+         detailsTable += `<tr><td>Usia (${age} th) + Gender (${jk})</td><td>${ageScore}</td></tr>`;
     }
     
+    // Skor Checklist
     document.querySelectorAll('.psi-check').forEach(c => { 
-        if(c.checked) total += parseInt(c.dataset.score); 
+        if(c.checked) {
+            const score = parseInt(c.dataset.score);
+            total += score;
+            const label = c.parentElement.innerText.split(' (+')[0]; // Ambil nama parameter
+            detailsTable += `<tr><td>${label}</td><td>${score}</td></tr>`;
+            hasFactors = true;
+        }
     });
+    
+    detailsTable += `<tr><td><strong>TOTAL SCORE</strong></td><td><strong>${total}</strong></td></tr></tbody></table>`;
+
     setText('totalScore', total);
     
     let kelas = "I", mort = "0.1%";
@@ -103,17 +124,23 @@ function calculatePSI() {
     else if(total >= 71) { kelas = "III"; mort = "2.8%"; }
     else if(total > 0) { kelas = "II"; mort = "0.6%"; }
     
-    setText('kelasRisiko', kelas);
+    setText('kelasRisiko', kelas); // Bug 3: Bhs Indo
+
+    // Tampilkan tabel detail HANYA jika ada data
+    const contentDiv = document.getElementById('calc-psi-content');
+    contentDiv.innerHTML = detailsTable;
 }
 
+// --- NATRIUM CALCULATOR (Bug 5 Fix: Looping Hari) ---
 function calculateNatrium() {
-    // ... Gunakan logika Natrium yang sudah fix sebelumnya ...
     const bb = parseFloat(getValue('bb'));
     const naSerum = parseFloat(getValue('naSerum'));
     const naTarget = parseFloat(getValue('naTarget'));
     const naInfus = parseFloat(getValue('naInfus'));
     const kecMax = parseFloat(getValue('naKecepatan'));
-    
+    const age = parseInt(document.getElementById('displayUmur')?.innerText) || 30;
+    const jk = getValue('jk');
+
     setText('displayNaTarget', naTarget || 0);
     
     const container = document.getElementById('natrium-tables-container');
@@ -123,33 +150,62 @@ function calculateNatrium() {
     setText('displayDeltaTotal', deltaTotal.toFixed(1));
     
     if (deltaTotal <= 0) {
-        container.innerHTML = "<tr><td colspan='2'>Target tercapai</td></tr>";
+        container.innerHTML = "<tr><td colspan='2'>Target tercapai / Nilai serum lebih tinggi.</td></tr>";
         return;
     }
     
-    // Logika tabel harian
-    let tglAsesmen = getValue('tglAsesmen') ? new Date(getValue('tglAsesmen')) : new Date();
-    const tbw = bb * 0.6; // Simplifikasi
-    const deltaPerLiter = (naInfus - naSerum) / (tbw + 1);
-    const vol = (Math.min(deltaTotal, kecMax) / deltaPerLiter) * 1000;
-    const botol = Math.ceil(vol / 500);
-    const speed = (vol / 24).toFixed(1);
-    
-    // Format tanggal header tabel
-    const dateStr = `${tglAsesmen.getDate()} ${["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"][tglAsesmen.getMonth()]} ${tglAsesmen.getFullYear()}`;
+    // Reset Container Sebelum Loop (PENTING!)
+    container.innerHTML = "";
 
-    container.innerHTML = `
+    let tglAsesmen = getValue('tglAsesmen') ? new Date(getValue('tglAsesmen')) : new Date();
+    
+    // Rumus TBW Watson
+    let factor = (age <= 18) ? 0.6 : (jk === 'L' ? (age > 65 ? 0.5 : 0.6) : (age > 65 ? 0.45 : 0.5));
+    const tbw = bb * factor;
+    const deltaPerLiter = (naInfus - naSerum) / (tbw + 1);
+
+    let sisaDelta = deltaTotal;
+    let hari = 1;
+
+    // LOOPING HARI (Bug 5 Fix)
+    while (sisaDelta > 0.01) {
+        let deltaHariIni = Math.min(sisaDelta, kecMax); // Max 8 atau 10 mEq per hari
+        
+        // Rumus Adrogue
+        const volL = deltaHariIni / deltaPerLiter;
+        const volmL = volL * 1000;
+        const botol = Math.ceil(volmL / 500); // Asumsi NaCl 3% sediaan 500ml
+        const speed = (volmL / 24).toFixed(1);
+
+        // Update Tanggal
+        let currentDayDate = new Date(tglAsesmen);
+        currentDayDate.setDate(tglAsesmen.getDate() + (hari - 1));
+        const months = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+        const dateStr = `${currentDayDate.getDate()} ${months[currentDayDate.getMonth()]} ${currentDayDate.getFullYear()}`;
+
+        // Append Table (Gunakan += bukan =)
+        const tableHtml = `
         <table class="scoring-table">
-            <thead><tr><th style="background:#4CAF50">Rencana Hari ke-1 (${dateStr})</th><th>Hasil</th></tr></thead>
+            <thead><tr><th style="background:${hari === 1 ? '#4CAF50' : '#2196F3'}; color:white;">Rencana Hari ke-${hari} (${dateStr})</th><th>Hasil</th></tr></thead>
             <tbody>
-                <tr><td>TBW</td><td>${tbw.toFixed(1)} L</td></tr>
-                <tr class="highlight-natrium"><td>Kebutuhan</td><td>${botol} Botol (500mL)</td></tr>
-                <tr class="highlight-natrium"><td>Kecepatan</td><td>${speed} mL/jam</td></tr>
+                ${hari === 1 ? `<tr><td>Total Body Water (TBW)</td><td>${tbw.toFixed(1)} L</td></tr>` : ''}
+                <tr><td>Target Δ Na+ Hari Ini</td><td>${deltaHariIni.toFixed(1)} mEq/L</td></tr>
+                <tr class="highlight-natrium"><td>Kebutuhan Cairan</td><td>${botol} Botol (Total ${volmL.toFixed(0)} mL)</td></tr>
+                <tr class="highlight-natrium"><td>Kecepatan Infus</td><td>${speed} mL/jam</td></tr>
             </tbody>
         </table>`;
+        
+        container.innerHTML += tableHtml;
+
+        sisaDelta -= deltaHariIni;
+        hari++;
+        
+        // Safety Break (Mencegah infinite loop jika input aneh)
+        if(hari > 7) break; 
+    }
 }
 
-// INI LOGIKA KALIUM YANG KOMPLIT (BUG 2 FIX)
+// --- KALIUM CALCULATOR (Kalium Fix Text) ---
 function calculateKalium() {
     const bb = parseFloat(getValue('bb'));
     const kSerum = parseFloat(getValue('kSerum'));
@@ -163,7 +219,6 @@ function calculateKalium() {
     setText('displayKebutuhanK', kebutuhan > 0 ? kebutuhan.toFixed(1) : "0");
     setText('displayKaliumSerum', kSerum.toFixed(2));
     
-    // Update Status
     let klas = (kSerum < 2.5) ? "Berat" : (kSerum < 3.0) ? "Sedang" : (kSerum < 3.5) ? "Ringan" : "Normal";
     setText('displayStatusK', klas);
 
@@ -178,7 +233,7 @@ function calculateKalium() {
     let rows = `
         <tr><td>Kalium Serum</td><td>${kSerum.toFixed(2)} mEq/L</td></tr>
         <tr><td>Target Koreksi</td><td>${kTarget.toFixed(1)} mEq/L</td></tr>
-        <tr><td>Dosis Total</td><td><strong>${kebutuhan.toFixed(1)} mEq</strong> (${jumlahBotol} Botol)</td></tr>
+        <tr><td>Dosis Total</td><td><strong>${kebutuhan.toFixed(1)} mEq</strong> (${jumlahBotol} Botol KCl)</td></tr>
     `;
 
     if (akses === 'sentral') {
@@ -203,5 +258,5 @@ function calculateKalium() {
 }
 
 function getValue(id) { return document.getElementById(id)?.value; }
-function setText(id, txt) { const el = document.getElementById(id); if (el) el.textContent = txt; }
+function setText(id, txt) { const el = document.getElementById(id); if (el) el.innerText = txt; }
 function printAndDownload() { window.print(); }
