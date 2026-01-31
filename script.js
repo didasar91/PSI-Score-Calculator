@@ -39,6 +39,12 @@ document.getElementById('jk').addEventListener('change', updateStats);
 ['bb', 'naSerum', 'naTarget', 'naKecepatan', 'naInfus', 'kSerum', 'kTarget', 'aksesVena'].forEach(id => {
     const el = document.getElementById(id);
     if(el) el.addEventListener('input', () => {calculateNatrium() ; calculateKalium() ;
+    if (id === 'aksesVena') {
+            el.addEventListener('change', () => {
+                calculateNatrium();
+                calculateKalium();
+            });
+    }
     });
 });
 
