@@ -40,6 +40,10 @@ body { font-family: 'Arial', sans-serif; line-height: 1.2; padding: 10px; backgr
     html, body { background: #ffffff !important; padding: 0; margin: 0; }
     .container { width: 100%; padding: 0; box-shadow: none; border: none; background: #ffffff !important; max-width: 100%; margin: 0; }
     .screen-only { display: none !important; }
+    /* Pastikan setiap tabel rencana harian tidak terpotong */
+    .scoring-table { page-break-inside: avoid; margin-bottom: 20px; }
+    /* Warna header harian */
+    .scoring-table thead th { color: white !important; -webkit-print-color-adjust: exact !important; }
     body.mode-psi #calc-natrium-content, body.mode-psi #natrium-output-box { display: none !important; }
     body.mode-natrium #calc-psi-content, body.mode-natrium #psi-output-box { display: none !important; }
 }
