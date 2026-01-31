@@ -76,14 +76,15 @@ function calculateNatrium() {
     const naSerum = parseFloat(document.getElementById('naSerum').value);
     const naTarget = parseFloat(document.getElementById('naTarget').value);
     const naInfus = parseFloat(document.getElementById('naInfus').value);
-    const kecMax = parseFloat(document.getElementById('naKecepatan').value);
+    const kecMax = parseFloat(document.getElementById('naKecepatan').value); // Mengambil dari input angka
     const jk = document.getElementById('jk').value;
-    const age = parseInt(document.getElementById('displayUmur').textContent) || 30;
+    const ageText = document.getElementById('displayUmur').textContent;
+    const age = parseInt(ageText) || 30;
 
     const container = document.getElementById('natrium-tables-container');
     container.innerHTML = ""; 
 
-    if(!bb || isNaN(naSerum) || isNaN(naTarget) || !jk) return;
+    if(!bb || isNaN(naSerum) || isNaN(naTarget) || isNaN(kecMax) || !jk) return;
 
     const deltaTotal = naTarget - naSerum;
     document.getElementById('displayDeltaTotal').textContent = deltaTotal.toFixed(1);
@@ -93,7 +94,6 @@ function calculateNatrium() {
         return;
     }
 
-    // TBW Logic
     let factor = (age <= 18) ? 0.6 : (jk === 'L' ? (age > 65 ? 0.5 : 0.6) : (age > 65 ? 0.45 : 0.5));
     const tbw = bb * factor;
     const deltaPerLiter = (naInfus - naSerum) / (tbw + 1);
@@ -103,11 +103,10 @@ function calculateNatrium() {
     const selectInfus = document.getElementById('naInfus');
     const cairan = selectInfus.options[selectInfus.selectedIndex].text.split(' (')[0];
 
-    // Otomatis membuat tabel harian
-    while (sisaDelta > 0) {
+    while (sisaDelta > 0.01) { // Floating point safety
         let deltaHariIni = Math.min(sisaDelta, kecMax);
         const vol = (deltaHariIni / deltaPerLiter) * 1000;
-        const botol = Math.ceil(vol / 500); // Pembulatan ke atas
+        const botol = Math.ceil(vol / 500);
         const speed = (vol / 24).toFixed(1);
 
         const tableHtml = `
@@ -124,7 +123,7 @@ function calculateNatrium() {
         container.innerHTML += tableHtml;
         
         sisaDelta -= deltaHariIni;
-        if(sisaDelta > 0.01) hari++; // Mencegah loop berlebih karena floating point
+        if(sisaDelta > 0.01) hari++;
         else break;
     }
     document.getElementById('displayDurasi').textContent = hari;
