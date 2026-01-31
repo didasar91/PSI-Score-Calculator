@@ -84,53 +84,71 @@ function calculateNatrium() {
     const deltaTotal = naTarget - naSerum;
     document.getElementById('displayDeltaTotal').textContent = deltaTotal.toFixed(1);
 
-    let factor = 0.6; 
-    if (age > 18) {
-        if (jk === 'P') factor = (age > 65) ? 0.45 : 0.5;
-        else factor = (age > 65) ? 0.5 : 0.6;
-    }
-    
+    // Penyesuaian TBW
+    let factor = (age <= 18) ? 0.6 : (jk === 'L' ? (age > 65 ? 0.5 : 0.6) : (age > 65 ? 0.45 : 0.5));
     const tbw = bb * factor;
     const deltaPerLiter = (naInfus - naSerum) / (tbw + 1);
 
-    let target1 = deltaTotal;
-    let target2 = 0;
+    // Reset Tampilan Tabel
+    document.getElementById('table-hari-2').style.display = 'none';
+    document.getElementById('table-hari-3').style.display = 'none';
+    document.getElementById('table-hari-4').style.display = 'none';
+    
+    let t1 = 0, t2 = 0, t3 = 0, t4 = 0;
 
-    if (deltaTotal > 10) {
-        document.getElementById('warning-ods').style.display = 'block';
+    // Logika Pembagian Bertahap (Maks 10 mEq/L per hari)
+    if (deltaTotal > 30) {
+        t1 = 10; t2 = 10; t3 = 10; t4 = deltaTotal - 30;
         document.getElementById('table-hari-2').style.display = 'table';
-        document.getElementById('displayStatus').textContent = "Risiko ODS (Dibagi)";
-        document.getElementById('displayStatus').style.color = "red";
-        target1 = 10;
-        target2 = deltaTotal - 10;
-        document.getElementById('header-hari-1').textContent = "Rencana Hari ke-1 (Maks 10 mEq/L)";
+        document.getElementById('table-hari-3').style.display = 'table';
+        document.getElementById('table-hari-4').style.display = 'table';
+    } else if (deltaTotal > 20) {
+        t1 = 10; t2 = 10; t3 = deltaTotal - 20;
+        document.getElementById('table-hari-2').style.display = 'table';
+        document.getElementById('table-hari-3').style.display = 'table';
+    } else if (deltaTotal > 10) {
+        t1 = 10; t2 = deltaTotal - 10;
+        document.getElementById('table-hari-2').style.display = 'table';
     } else {
-        document.getElementById('warning-ods').style.display = 'none';
-        document.getElementById('table-hari-2').style.display = 'none';
-        document.getElementById('displayStatus').textContent = "Aman";
-        document.getElementById('displayStatus').style.color = "green";
-        document.getElementById('header-hari-1').textContent = "Rencana Koreksi 24 Jam";
+        t1 = deltaTotal;
     }
 
-    const vol1 = (target1 / deltaPerLiter) * 1000;
-    const botol1 = Math.ceil(vol1 / 500);
-    const speed1 = vol1 / 24;
+    const hitung = (target) => {
+        const vol = (target / deltaPerLiter) * 1000;
+        return {
+            botol: Math.ceil(vol / 500),
+            speed: (vol / 24).toFixed(1)
+        };
+    };
 
     const selectInfus = document.getElementById('naInfus');
-    const namaCairan = selectInfus.options[selectInfus.selectedIndex].text.split(' (')[0];
+    const cairan = selectInfus.options[selectInfus.selectedIndex].text.split(' (')[0];
 
-    document.getElementById('txtTBW').textContent = tbw.toFixed(1);
-    document.getElementById('txtTargetHarian').textContent = target1.toFixed(1);
-    document.getElementById('txtBotolDisplay').textContent = botol1 + " Botol " + namaCairan + " 500 mL";
-    document.getElementById('txtKecepatan').textContent = speed1.toFixed(1) + " mL/jam";
+    // Isi Data Hari 1
+    const res1 = hitung(t1);
+    document.getElementById('txtTBW').textContent = tbw.toFixed(1) + " L";
+    document.getElementById('txtTargetHarian').textContent = t1.toFixed(1) + " mEq/L";
+    document.getElementById('txtBotolDisplay').textContent = res1.botol + " Botol " + cairan + " 500 mL";
+    document.getElementById('txtKecepatan').textContent = res1.speed + " mL/jam";
 
-    if (target2 > 0) {
-        const vol2 = (target2 / deltaPerLiter) * 1000;
-        const botol2 = Math.ceil(vol2 / 500);
-        const speed2 = vol2 / 24;
-        document.getElementById('txtTargetHarian2').textContent = target2.toFixed(1);
-        document.getElementById('txtBotolDisplay2').textContent = botol2 + " Botol " + namaCairan + " 500 mL";
-        document.getElementById('txtKecepatan2').textContent = speed2.toFixed(1) + " mL/jam";
+    // Isi Data Hari 2, 3, & 4 jika ada
+    if (t2 > 0) {
+        const res2 = hitung(t2);
+        document.getElementById('txtTargetHarian2').textContent = t2.toFixed(1) + " mEq/L";
+        document.getElementById('txtBotolDisplay2').textContent = res2.botol + " Botol " + cairan + " 500 mL";
+        document.getElementById('txtKecepatan2').textContent = res2.speed + " mL/jam";
+    }
+    if (t3 > 0) {
+        const res3 = hitung(t3);
+        document.getElementById('txtTargetHarian3').textContent = t3.toFixed(1) + " mEq/L";
+        document.getElementById('txtBotolDisplay3').textContent = res3.botol + " Botol " + cairan + " 500 mL";
+        document.getElementById('txtKecepatan3').textContent = res3.speed + " mL/jam";
+    }
+    if (t4 > 0) {
+        const res4 = hitung(t4);
+        document.getElementById('txtTargetHarian4').textContent = t4.toFixed(1) + " mEq/L";
+        document.getElementById('txtBotolDisplay4').textContent = res4.botol + " Botol " + cairan + " 500 mL";
+        document.getElementById('txtKecepatan4').textContent = res4.speed + " mL/jam";
     }
 }
 
