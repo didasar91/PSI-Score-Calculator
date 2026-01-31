@@ -104,32 +104,33 @@
             </div>
                 <div id="natrium-tables-container"></div>
             </div>
-       <div id="calc-kalium-content" style="display:none;">
-            <h2 class="form-title">Koreksi Hipokalemia</h2>
+    
+        <div id="calc-kalium-content" class="calc-content" style="display:none;">
+            <h2 class="form-title">Koreksi Hipokalemia (PPK MTMH)</h2>
             <div class="input-form screen-only">
                 <div class="form-group">
-                    <label>Kalium Serum Saat Ini:</label>
-                    <input type="number" id="kSerum" step="0.1" placeholder="Contoh: 2.8">
-                </div>
-                <div class="form-group">
-                    <label>Target Kalium (mEq/L):</label>
-                    <input type="number" id="kTarget" step="0.1" value="3.0">
-                </div>
-                <div class="form-group">
-                    <label>Akses Vena:</label>
-                    <select id="aksesVena">
-                        <option value="perifer">Vena Perifer</option>
-                        <option value="sentral">Vena Sentral</option>
-                    </select>
-                </div>
+                <label>Kalium Serum Saat Ini:</label>
+                <input type="number" id="kSerum" step="0.1" placeholder="Contoh: 2.8">
             </div>
-            <div id="kalium-result-table">
-                <table class="scoring-table">
-                    <thead><tr><th>Rencana Tata Laksana</th><th>Instruksi Klinis</th></tr></thead>
-                    <tbody id="kalium-instructions"></tbody>
-                </table>
+            <div class="form-group">
+                <label>Target Kalium (mEq/L):</label>
+                <input type="number" id="kTarget" step="0.1" value="3.0">
             </div>
-        </div>
+            <div class="form-group">
+                <label>Akses Vena:</label>
+                <select id="aksesVena">
+                    <option value="perifer">Vena Perifer</option>
+                    <option value="sentral">Vena Sentral</option>
+                </select>
+            </div>
+            </div>
+        <div>
+
+<div id="kalium-output-box" class="output-box green-box" style="display:none;">
+    <div class="output-title">Kebutuhan KCl</div>
+    <div class="output-value"><span id="displayKebutuhanK">0</span> <small>mEq</small></div>
+    <div class="output-label">Status: <span id="displayStatusK">-</span></div>
+</div>
         
         <div class="dpjp-section">
             <p>Diketahui oleh,</p>
