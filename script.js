@@ -76,10 +76,10 @@ function calculateNatrium() {
     const naSerum = parseFloat(document.getElementById('naSerum').value);
     const naTarget = parseFloat(document.getElementById('naTarget').value);
     const naInfus = parseFloat(document.getElementById('naInfus').value);
-    const kecMax = parseFloat(document.getElementById('naKecepatan').value); // Mengambil dari input angka
+    const kecMax = parseFloat(document.getElementById('naKecepatan').value);
     const jk = document.getElementById('jk').value;
-    const ageText = document.getElementById('displayUmur').textContent;
-    const age = parseInt(ageText) || 30;
+    const tglAsesmenInput = document.getElementById('tglAsesmen').value;
+    const age = parseInt(document.getElementById('displayUmur').textContent) || 30;
 
     const container = document.getElementById('natrium-tables-container');
     container.innerHTML = ""; 
@@ -94,6 +94,7 @@ function calculateNatrium() {
         return;
     }
 
+    // TBW & Delta per Liter
     let factor = (age <= 18) ? 0.6 : (jk === 'L' ? (age > 65 ? 0.5 : 0.6) : (age > 65 ? 0.45 : 0.5));
     const tbw = bb * factor;
     const deltaPerLiter = (naInfus - naSerum) / (tbw + 1);
@@ -103,15 +104,33 @@ function calculateNatrium() {
     const selectInfus = document.getElementById('naInfus');
     const cairan = selectInfus.options[selectInfus.selectedIndex].text.split(' (')[0];
 
-    while (sisaDelta > 0.01) { // Floating point safety
+    // Persiapan Tanggal
+    let baseDate = tglAsesmenInput ? new Date(tglAsesmenInput) : new Date();
+
+    while (sisaDelta > 0.01) {
         let deltaHariIni = Math.min(sisaDelta, kecMax);
         const vol = (deltaHariIni / deltaPerLiter) * 1000;
         const botol = Math.ceil(vol / 500);
         const speed = (vol / 24).toFixed(1);
 
+        // Hitung Tanggal untuk Hari ini
+        let currentDayDate = new Date(baseDate);
+        currentDayDate.setDate(baseDate.getDate() + (hari - 1));
+        
+        // Format Tanggal (Contoh: 31 Jan 2026)
+        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        const dateString = currentDayDate.toLocaleDateString('id-ID', options);
+
         const tableHtml = `
             <table class="scoring-table" style="margin-top: 15px;">
-                <thead><tr><th style="background:${hari === 1 ? '#4CAF50' : '#2196F3'} !important;">Rencana Koreksi Hari ke-${hari}</th><th>Hasil</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th style="background:${hari === 1 ? '#4CAF50' : '#2196F3'} !important;">
+                            Rencana Hari ke-${hari} (${dateString})
+                        </th>
+                        <th>Hasil</th>
+                    </tr>
+                </thead>
                 <tbody>
                     ${hari === 1 ? `<tr><td>Total Body Water (TBW)</td><td>${tbw.toFixed(1)} L</td></tr>` : ''}
                     <tr><td>Target Δ Na+ Periode Ini</td><td>${deltaHariIni.toFixed(1)} mEq/L</td></tr>
