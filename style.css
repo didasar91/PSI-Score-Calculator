@@ -9,7 +9,26 @@ body { font-family: 'Arial', sans-serif; font-size: 13px; background-color: #f0f
 .btn-tab { padding: 10px 20px; border: none; background: #ddd; cursor: pointer; font-weight: bold; border-radius: 5px; transition: 0.3s; }
 .btn-tab.active { background: #4CAF50; color: white; }
 
-.input-form { display: grid; grid-template-columns: repeat (4 1fr); gap: 15px; margin-bottom: 25px; padding: 0px; background-color: #ffffff; border-radius: 8px; }
+.input-form {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 0px !important; /* Nol kan padding agar sejajar dengan border */
+    background-color: transparent; /* Hilangkan background agar tidak menumpuk */
+}
+
+.output-box {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 200px; /* Lebar tetap agar konsisten */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid #4CAF50;
+    background-color: #f9fdf9;
+}
 .form-group { display: flex; flex-direction: column; gap: 5px; }
 .form-group label { font-weight: bold; font-size: 11px; color: #495057; text-transform: uppercase; }
 .form-group input, .form-group select { padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; font-size: 13px; }
@@ -36,15 +55,30 @@ body { font-family: 'Arial', sans-serif; font-size: 13px; background-color: #f0f
 .btn-clear { background: #f44336; color: white; }
 
 @media print {
-    @page { size: A4; margin: 8mm; }
-    html, body { background: #ffffff !important; padding: 0; margin: 0; }
-    .container { width: 100%; padding: 0; box-shadow: none; border: none; background: #ffffff !important; max-width: 100%; margin: 0; }
-    .header-container { width: 100% !important; margin-bottom: 1px; text-align: center; }
-    .header-image { width:100% !important; max-width:100% !important; height: auto !important; display: block; }
-    .screen-only { display: none !important; }
-    .scoring-table { page-break-inside: avoid; margin-bottom: 20px; }
-    .scoring-table thead th { color: white !important; -webkit-print-color-adjust: exact !important; }
-    body.mode-kalium #calc-psi-content, body.mode-kalium #psi-output-box,
-    body.mode-kalium #calc-natrium-content, body.mode-kalium #natrium-output-box { 
-        display: none !important;
+    .patient-total-wrapper {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: stretch !important;
+        gap: 15px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    .patient-info {
+        flex: 1 !important;
+    }
+
+    /* Memastikan box output yang aktif saja yang muncul di kanan */
+    #psi-output-box, #natrium-output-box, #kalium-output-box {
+        width: 220px !important;
+        min-width: 220px !important;
+        display: none; /* Default sembunyi */
+    }
+
+    /* Munculkan hanya jika parent-nya aktif berdasarkan class di body */
+    .mode-psi #psi-output-box { display: flex !important; }
+    .mode-natrium #natrium-output-box { display: flex !important; }
+    .mode-kalium #kalium-output-box { display: flex !important; }
 }
