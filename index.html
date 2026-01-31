@@ -18,7 +18,7 @@
             <button onclick="showCalculator('kalium')" id="btn-kalium" class="btn-tab">Koreksi Kalium</button>
         </div>
 
-        <div class="patient-total-wrapper">
+       <div class="patient-total-wrapper">
             <div class="patient-info">
                 <div class="info-line"><span class="label">Nama</span><span>:</span><span id="displayNama">-</span></div>
                 <div class="info-line"><span class="label">No. MR</span><span>:</span><span id="displayNoMR">-</span></div>
@@ -43,7 +43,16 @@
                 <div class="total-line"><span class="total-label">Kadar K+:</span> <span id="displayKaliumSerum">0</span> mEq/L</div>
                 <div class="total-line"><span class="total-label">Klasifikasi:</span> <span id="displayKlasifikasiK">-</span></div>
                 <div class="total-line"><span class="total-label">Kebutuhan KCl:</span> <span id="displayKebutuhanK">0</span> mEq</div>
-            </div
+            </div> 
+       </div>
+
+        <div class="input-form screen-only">
+            <div class="form-group"><label>Nama Pasien*:</label><input type="text" id="nama"></div>
+            <div class="form-group"><label>No. MR (10 Digit)*:</label><input type="text" id="noMR" maxlength="10"></div>
+            <div class="form-group"><label>Tanggal Lahir*:</label><input type="date" id="tglLahir"></div>
+            <div class="form-group"><label>Jenis Kelamin*:</label><select id="jk"><option value="">Pilih</option><option value="L">Laki-laki</option><option value="P">Perempuan</option></select></div>
+            <div class="form-group"><label>Tgl Assessment*:</label><input type="date" id="tglAsesmen"></div>
+            <div class="form-group"><label>Berat Badan (kg)*:</label><input type="number" id="bb"></div>
         </div>
 
         <div class="input-form screen-only">
@@ -104,25 +113,28 @@
             </div>
                 <div id="natrium-tables-container"></div>
             </div>
-        <div id="calc-kalium-content" style="display:none;">
+       <div id="calc-kalium-content" style="display:none;">
             <h2 class="form-title">Koreksi Hipokalemia (PPK MTMH)</h2>
             <div class="input-form screen-only">
-                <div class="form-group"><label>Kalium Serum Saat Ini:</label><input type="number" id="kSerum" step="0.1" placeholder="Contoh: 2.8"></div>
-                <div class="form-group"><label>Akses Vena:</label>
+                <div class="form-group">
+                    <label>Kalium Serum Saat Ini:</label>
+                    <input type="number" id="kSerum" step="0.1" placeholder="Contoh: 2.8">
+                </div>
+                <div class="form-group">
+                    <label>Akses Vena:</label>
                     <select id="aksesVena">
                         <option value="perifer">Vena Perifer</option>
                         <option value="sentral">Vena Sentral</option>
                     </select>
                 </div>
+            </div>
+            <div id="kalium-result-table">
+                <table class="scoring-table">
+                    <thead><tr><th>Rencana Tata Laksana</th><th>Instruksi Klinis</th></tr></thead>
+                    <tbody id="kalium-instructions"></tbody>
+                </table>
+            </div>
         </div>
-        <div id="kalium-result-table">
-            <table class="scoring-table">
-                <thead><tr><th>Rencana Tata Laksana</th><th>Instruksi Klinis</th></tr></thead>
-                <tbody id="kalium-instructions">
-                    </tbody>
-            </table>
-        </div>
-    </div>
         
         <div class="dpjp-section">
             <p>Diketahui oleh,</p>
