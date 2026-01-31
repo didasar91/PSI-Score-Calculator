@@ -20,8 +20,8 @@ document.getElementById('tglAsesmen').addEventListener('change', e => document.g
 document.getElementById('tglLahir').addEventListener('change', updateStats);
 document.getElementById('jk').addEventListener('change', updateStats);
 
-['bb', 'naSerum', 'naTarget', 'naInfus'].forEach(id => {
-    document.getElementById(id).addEventListener('input', calculateNatrium);
+['bb', 'naSerum', 'naTarget', 'naKecepatan', 'naInfus', 'kSerum', 'aksesVena'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => { calculateNatrium(); calculateKalium();});
 });
 
 function updateStats() {
@@ -149,6 +149,44 @@ function calculateNatrium() {
         else break;
     }
     document.getElementById('displayDurasi').textContent = hari;
+}
+
+function calculateKalium() {
+    const bb = parseFloat(document.getElementById('bb').value);
+    const kSerum = parseFloat(document.getElementById('kSerum').value);
+    const akses = document.getElementById('aksesVena').value;
+    const container = document.getElementById('kalium-instructions');
+
+    if (!bb || isNaN(kSerum)) return;
+
+    // Klasifikasi 
+    let klasifikasi = "Normal";
+    if (kSerum < 2.5) klasifikasi = "Berat";
+    else if (kSerum < 3.0) klasifikasi = "Sedang";
+    else if (kSerum < 3.5) klasifikasi = "Ringan";
+    
+    document.getElementById('displayKaliumSerum').textContent = kSerum;
+    document.getElementById('displayKlasifikasiK').textContent = klasifikasi;
+
+    // Rumus PPK MTMH 
+    const kebutuhan = 0.3 * bb * (4 - kSerum);
+    document.getElementById('displayKebutuhanK').textContent = kebutuhan.toFixed(1);
+
+    // Instruksi berdasarkan PPK [cite: 96, 104]
+    let instruksi = "";
+    if (kSerum >= 3.0 && kSerum < 3.5) {
+        instruksi = `<tr><td>Terapi Oral</td><td>KCl oral 20 mEq 3-4 kali sehari & edukasi diet kaya kalium.</td></tr>`;
+    } else {
+        const kecPerifer = "Maks 10-20 mEq dalam 500ml NaCl 0.9%";
+        const kecSentral = "25 mEq dalam 100ml NaCl 0.9% (Kecepatan 5-20 mEq/jam)";
+        instruksi = `
+            <tr><td>Metode</td><td>Rapid Correction (Intravena)</td></tr>
+            <tr><td>Dosis Total</td><td>${kebutuhan.toFixed(1)} mEq KCl dilarutkan dalam NaCl 0.9%</td></tr>
+            <tr><td>Kecepatan Maks</td><td>${akses === 'perifer' ? kecPerifer : kecSentral}</td></tr>
+            <tr><td>Monitoring</td><td>Observasi ekstravasasi setiap 30 menit & EKG kontinu jika >10 mEq/jam.</td></tr>
+        `;
+    }
+    container.innerHTML = instruksi;
 }
 
 function printAndDownload() {
