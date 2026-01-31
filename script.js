@@ -84,6 +84,9 @@ function calculateNatrium() {
     const container = document.getElementById('natrium-tables-container');
     container.innerHTML = ""; 
 
+    document.getElementById('displayNaAwal').textContent = isNaN(naSerum) ? "0" : naSerum;
+    document.getElementById('displayNaTarget').textContent = isNaN(naTarget) ? "0" : naTarget;
+    
     if(!bb || isNaN(naSerum) || isNaN(naTarget) || isNaN(kecMax) || !jk) return;
 
     const deltaTotal = naTarget - naSerum;
