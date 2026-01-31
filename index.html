@@ -86,6 +86,20 @@
             <div class="input-form screen-only">
                 <div class="form-group"><label>Na+ Serum Saat Ini:</label><input type="number" id="naSerum" placeholder="Contoh: 120"></div>
                 <div class="form-group"><label>Na+ Serum Target:</label><input type="number" id="naTarget" placeholder="Contoh: 135"></div>
+                <div class="form-group"><label>Kec. Δ Na+ / 24 Jam:</label>
+                    <select id="naKecepatan">
+                        <option value="1">1 mEq/L</option>
+                        <option value="2">2 mEq/L</option>
+                        <option value="3">3 mEq/L</option>
+                        <option value="4">4 mEq/L</option>
+                        <option value="5">5 mEq/L</option>
+                        <option value="6">6 mEq/L</option>
+                        <option value="7">7 mEq/L</option>
+                        <option value="8" selected>8 mEq/L</option>
+                        <option value="9">9 mEq/L</option>
+                        <option value="10">10 mEq/L</option>
+                    </select>
+                </div>
                 <div class="form-group"><label>Jenis Cairan Infus:</label>
                     <select id="naInfus">
                         <option value="513">NaCl 3% (513 mEq/L)</option>
@@ -93,9 +107,7 @@
                     </select>
                 </div>
             </div>
-            
-            <div id="warning-ods" class="warning-box" style="display:none;">
-                ⚠️ Target koreksi > 10 mEq/L. Perhitungan dibagi menjadi rencana 2 hari untuk mencegah ODS.
+                <div id="natrium-tables-container"></div>
             </div>
 
             <div class="natrium-result-table">
