@@ -4,12 +4,28 @@ function showCalculator(mode) {
     currentMode = mode;
     document.body.className = 'mode-' + mode;
     const isPsi = (mode === 'psi');
-    document.getElementById('calc-psi-content').style.display = isPsi ? 'block' : 'none';
-    document.getElementById('calc-natrium-content').style.display = !isPsi ? 'block' : 'none';
-    document.getElementById('psi-output-box').style.display = isPsi ? 'block' : 'none';
-    document.getElementById('natrium-output-box').style.display = !isPsi ? 'block' : 'none';
+    const isNatrium = (mode === 'natrium');
+    const isKalium = (mode === 'kalium');
+    document.getElementById('calc-psi-content').style.display = 'none';
+    document.getElementById('calc-natrium-content').style.display = 'none';
+    document.getElementById('calc-kalium-content').style.display = 'none';
+    document.getElementById('psi-output-box').style.display = 'none';
+    document.getElementById('natrium-output-box').style.display = 'none';
+    document.getElementById('kalium-output-box').style.display = 'none';
+    
+    if(isPsi) {
+        document.getElementById('calc-psi-content').style.display = 'block';
+        document.getElementById('psi-output-box').style.display = 'block';
+    } else if(isNatrium) {
+        document.getElementById('calc-natrium-content').style.display = 'block';
+        document.getElementById('natrium-output-box').style.display = 'block';
+    } else if(isKalium) {
+        document.getElementById('calc-kalium-content').style.display = 'block';
+        document.getElementById('kalium-output-box').style.display = 'block';
+    }
     document.getElementById('btn-psi').classList.toggle('active', isPsi);
-    document.getElementById('btn-natrium').classList.toggle('active', !isPsi);
+    document.getElementById('btn-natrium').classList.toggle('active', isNatrium);
+    document.getElementById('btn-kalium').classList.toggle('active', isKalium);
 }
 
 // Data Binding
